@@ -1,0 +1,41 @@
+<div class="site-top">
+  <h1 class="logo"><a href="/">Better Reddit</a></h1>
+  <a href="/" class="logo-small">BR</a>
+  <span>/</span>
+  <a href="/topics" class="subreddit"><%= @listing_name %></a>
+
+  <nav class="site-top-sorts">
+    <a class="site-top-sort is-current" href="#">
+      Hot
+    </a>
+    <a class="site-top-sort" href="#">
+      Top Daily
+    </a>
+    <a class="site-top-sort" href="#">
+      Top Monthly
+    </a>
+    <a class="site-top-sort" href="#">
+      Top All Time
+    </a>
+  </nav>
+</div>
+
+<div class="site-body">
+  <nav class="site-sidebar">
+    <ul>
+      <%= for listing <- sidebar_subreddits() do %>
+        <li>
+        <%= link(listing, 
+                 to: listing_path(listing),
+                 class: listing_class(listing, @listing_name)) %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+  <main class="listing">
+    <div class="js-post-preview postPreview"></div>
+    <%= for post <- @listing.posts do %>
+      <%= render_post(post) %>
+    <% end %>
+  </main>
+</div>

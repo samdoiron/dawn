@@ -1,0 +1,5 @@
+<video autoplay loop class="post-embed">
+  <%= Enum.map @sources,  fn ({type, url}) -> %>
+    <source type="<%= type %>" src="<%= url %>">
+  <% end %>
+</video>

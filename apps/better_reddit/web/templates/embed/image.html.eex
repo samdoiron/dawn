@@ -1,0 +1,3 @@
+<a href="<%= @source %>" rel="noopener" target="_blank">
+  <img onload="this.classList.add('is-loaded')" class="post-embed" src="<%= @source %>">
+</a>

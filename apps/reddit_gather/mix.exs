@@ -23,7 +23,7 @@ defmodule RedditGather.Mixfile do
   end
 
   defp deps do
-    [{:poison, "~> 3.0"},
+    [{:poison, "~> 2.0"},
      {:httpoison, "~> 0.10.0"},
      {:timex, "~> 3.0"},
      {:kafka_ex, "~> 0.6.1"}]

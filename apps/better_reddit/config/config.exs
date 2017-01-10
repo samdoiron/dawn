@@ -16,6 +16,14 @@ config :better_reddit, BetterReddit.Repo,
 config :better_reddit,
   ecto_repos: [BetterReddit.Repo]
 
+config :kafka_ex,
+  brokers: [
+    {"::1", 9092}
+  ],
+  consumer_group: "reddit_posts",
+  use_ssl: false,
+  consumer_group: "web"
+
 # Configures the endpoint
 config :better_reddit, BetterReddit.Endpoint,
   url: [host: "localhost"],

@@ -14,10 +14,8 @@ defmodule BetterReddit do
 
     children = [
       supervisor(BetterReddit.Endpoint, []),
-      supervisor(BetterReddit.PostSupervisor, []),
+      supervisor(BetterReddit.RedditPostSupervisor, []),
       worker(BetterReddit.Repo, []),
-
-      worker(BetterReddit.Reddit, [])
     ]
 
     opts = [strategy: :one_for_one, name: Supervisor]

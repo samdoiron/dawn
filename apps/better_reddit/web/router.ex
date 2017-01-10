@@ -16,17 +16,8 @@ defmodule BetterReddit.Router do
   end
 
   scope "/", BetterReddit do
-    pipe_through :browser
-
-    get "/", ListingController, :index
-    resources "/listings", ListingController, only: [:index, :show]
-
-    resources "/posts", PostController, only: [:show]
-    get "/posts/:id/embed", PostController, :embed
   end
 
   scope "/api", BetterReddit.API do
-    pipe_through :api
-    resources "/communities", CommunityController, only: [:show]
   end
 end

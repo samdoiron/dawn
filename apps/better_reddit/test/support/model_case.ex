@@ -59,7 +59,11 @@ defmodule BetterReddit.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&BetterReddit.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
+  end
+
+  def translate_error(_error) do
+    "TODO: look in model_case.ex to fix this"
   end
 end

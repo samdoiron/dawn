@@ -1,11 +1,11 @@
 exports.config = {
-  sourceMaps: 'absoluteUrl',
-  optimize: true,
+  sourceMaps: false,
+  optimize: false,
 
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: "js/app.js",
 
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
@@ -56,7 +56,14 @@ exports.config = {
   plugins: {
     babel: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/web\/static\/vendor/]
+      ignore: [/web\/static\/vendor/, /web\/static\/elm/],
+    },
+
+    elmBrunch: {
+      mainModules: ['Main.elm'],
+      elmFolder: 'web/static/elm',
+      outputFolder: '../js',
+      outputFile: 'elm.js'
     }
   },
 

@@ -1,6 +1,6 @@
 defmodule BetterReddit do
   use Application
-  alias BetterReddit.Endpoint
+  alias BetterReddit.{Endpoint, Hot, HotChannel}
 
   @moduledoc ~S"""
   The root module for BetterReddit. Calling start starts the entire application,

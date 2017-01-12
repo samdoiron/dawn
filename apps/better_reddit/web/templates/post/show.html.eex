@@ -1,2 +1,0 @@
-<h1 class="post-title"><%= @post.title %></h1>
-<%= BetterReddit.EmbedView.render_post(@post) %>

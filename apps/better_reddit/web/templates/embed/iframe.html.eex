@@ -1,4 +1,0 @@
-<iframe class="post-embed is-iframe"
-        width="100%"
-        src="<%= @source %>"
-        frameborder="0"></iframe>

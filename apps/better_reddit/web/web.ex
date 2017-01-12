@@ -52,7 +52,6 @@ defmodule BetterReddit.Web do
       use Phoenix.HTML
 
       import BetterReddit.Router.Helpers
-      import BetterReddit.ErrorHelpers
       import BetterReddit.Gettext
     end
   end

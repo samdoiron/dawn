@@ -16,8 +16,11 @@ defmodule BetterReddit.Router do
   end
 
   scope "/", BetterReddit do
+    get "/", AppController, :index
   end
 
   scope "/api", BetterReddit.API do
+    pipe_through :api
+    resources "/communities", CommunityController, only: [:show]
   end
 end

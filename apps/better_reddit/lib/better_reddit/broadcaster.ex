@@ -11,7 +11,7 @@ defmodule BetterReddit.Broadcaster do
   end
 
   def send_individual(broad, subscriber, message) do
-    GenServer.cast(subscriber, {:message, message})
+    GenServer.call(subscriber, {:message, message})
     broad
   end
 

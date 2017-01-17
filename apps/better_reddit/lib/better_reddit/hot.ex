@@ -58,9 +58,17 @@ defmodule BetterReddit.Hot do
     new_top = ensured[name]
     |> difference_by_id(new_posts)
     |> Enum.concat(new_posts)
-    |> Enum.sort_by(&(&1.score), &>=/2)
+    |> Enum.sort_by(&hotness/1, &>=/2)
     |> Enum.take(@top_post_count)
     %{ ensured | name => new_top }
+  end
+
+  defp hotness(post) do
+    # Score with a halflife of 4 hours
+    e = 2.71827
+    hours_ago = Timex.diff(Timex.now(), post.time_posted, :hours)
+    scale = :math.pow(e, (-1/4) * hours_ago)
+    post.score * scale
   end
 
   defp difference_by_id(old_posts, new_posts) do

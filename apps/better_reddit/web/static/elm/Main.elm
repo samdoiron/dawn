@@ -88,7 +88,6 @@ updateCommunity community model =
       Dict.update
         model.community
         (Maybe.map <| \_ -> community)
-
         model.communities
   in
     { model | communities = newCommunities }

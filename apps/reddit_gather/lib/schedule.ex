@@ -14,6 +14,7 @@ defmodule RedditGather.Schedule do
   defstruct total_run_count: 0, classes: [], total_weights: 0
 
   defmodule Class do
+    @moduledoc false
     defstruct name: :unknown_class, weight: 0, run_count: 0
   end
 
@@ -49,14 +50,14 @@ defmodule RedditGather.Schedule do
   end
 
   defp update_for_run(state, run_class) do
-    %{ state | :total_run_count => state.total_run_count + 1,
-               :classes => update_run_count(run_class, state.classes) }
+    %{state | :total_run_count => state.total_run_count + 1,
+              :classes => update_run_count(run_class, state.classes)}
   end
 
   def update_run_count(run_class, classes) do
     Enum.map classes, fn class ->
       if class.name == run_class.name do
-        %{ class | :run_count => class.run_count + 1}
+        %{class | :run_count => class.run_count + 1}
       else
         class
       end

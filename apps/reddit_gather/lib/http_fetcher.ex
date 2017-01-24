@@ -1,15 +1,13 @@
-defmodule RedditGather.HTTPFetcher do
+defmodule RedditGather.HTTP do
   @moduledoc ~S"""
-  HTTPFetcher implements the Fetch behaviour, and uses HTTP
-  to fetch the requested url.
+  HTTPFetc uses HTTP to fetch the requested url.
 
   If it is successful (receives a 200 response), it will return a
   tuple {:ok, content} where content is a String.
 
-  Otherwise, it will return {:error, reson}
+  Otherwise, it will return {:error, reason}
   """
 
-  @behaviour RedditGather.Fetch
   @user_agent "web:reddit_gather:v0.1.0 (by /u/tinsnail)"
 
   def fetch(url) do

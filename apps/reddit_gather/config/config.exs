@@ -1,9 +1,8 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
 config :reddit_gather,
-  post_output: RedditGather.KafkaPostOutput
+  post_output: RedditGather.KafkaPostOutput,
+  time: RedditGather.ActualTime
 
 config :kafka_ex,
   brokers: [

@@ -1,5 +1,8 @@
 defmodule RedditGather.ConsolePostOutput do
   @behaviour RedditGather.PostOutput
+  @moduledoc ~S"""
+  Output gathered reddit posts to the console.
+  """
 
   require Logger
 

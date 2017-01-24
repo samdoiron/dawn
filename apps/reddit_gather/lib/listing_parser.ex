@@ -38,8 +38,7 @@ defmodule RedditGather.ListingParser do
     post
     |> Map.get("created_utc")
     |> trunc()
-    |> Integer.to_string()
-    |> Timex.parse!("{s-epoch}")
+    |> DateTime.from_unix!(:seconds)
   end
 
   defp extract_thumbnail(post) do

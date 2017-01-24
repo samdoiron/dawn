@@ -9,13 +9,14 @@ defmodule RedditGather.GatherTop do
 
   require Logger
 
+  @time Application.get_env(:reddit_gather, :time)
   @output Application.get_env(:reddit_gather, :post_output)
 
   @max_priority 500_000
   @reddit_api_timeout_ms 2_000
 
-  def start_link do
-    case Task.start_link(fn -> run(load_priorities()) end) do
+  def start_link(fetcher) do
+    case Task.start_link(fn -> run(fetcher, load_priorities()) end) do
       {:ok, pid} -> process_started(pid)
       other -> other
     end
@@ -26,23 +27,23 @@ defmodule RedditGather.GatherTop do
     {:ok, pid}
   end
 
-  def run(priorities) do
+  defp run(fetcher, priorities) do
     priorities
     |> Schedule.with_priorities()
-    |> Enum.each(&update_subreddit/1)
+    |> Enum.each(&(update_subreddit(fetcher, &1)))
   end
 
-  defp update_subreddit(name) do
+  def update_subreddit(fetcher, name) do
     sleep_timeout()
     Logger.info("updating subreddit #{name}")
-    case Client.get_subreddit(name) do
+    case Client.get_subreddit(fetcher, name) do
       {:ok, posts} -> send_posts(posts)
       {:error, err} -> Logger.warn("failed to fetch subreddit #{inspect(err)}")
     end
   end
 
   defp sleep_timeout do
-    :timer.sleep(@reddit_api_timeout_ms)
+    @time.sleep_ms(@reddit_api_timeout_ms)
   end
 
   defp send_posts(posts) do

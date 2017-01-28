@@ -4,7 +4,8 @@ defmodule BetterReddit.Mixfile do
   def project do
     [app: :better_reddit,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     build_path: "../../_build",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -12,8 +13,6 @@ defmodule BetterReddit.Mixfile do
      aliases: aliases(),
      deps: deps(),
 
-     # Umbrella
-     build_path: "../../_build",
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock"

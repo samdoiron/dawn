@@ -21,6 +21,7 @@ defmodule BetterReddit.RedditPostGateway do
   require Logger
 
   def start_link(name) do
+    IO.puts("starting gateway")
     GenStage.start_link(__MODULE__, [], name: name)
   end
 
@@ -65,7 +66,7 @@ defmodule BetterReddit.RedditPostGateway do
     |> Enum.map(fn message ->
       decoded = Poison.decode!(message.value, as: %RedditPost{})
       {:ok, parsed_time} = Timex.parse(decoded.time_posted, "{ISO:Extended}")
-      %{ decoded | time_posted: parsed_time }
+      %{decoded | time_posted: parsed_time}
     end)
   end
 end

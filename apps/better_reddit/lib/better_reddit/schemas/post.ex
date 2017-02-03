@@ -4,6 +4,8 @@ defmodule BetterReddit.Schemas.Post do
   """
   use Ecto.Schema
   import Ecto.Query
+  import Ecto.Changeset
+    import Ecto.Changeset
   alias BetterReddit.Repo
   alias BetterReddit.Schemas.Post
   alias Ecto.Multi
@@ -20,6 +22,57 @@ defmodule BetterReddit.Schemas.Post do
     field :score, :integer
     field :is_nsfw, :boolean
     field :time_posted, :utc_datetime
+  end
+
+  def merge(old, new) do
+    %{old | score: new.score,
+            thumbnail: new.thumbnail,
+            is_nsfw: new.is_nsfw}
+  end
+
+  def changeset(post, params) do
+    post
+    |> cast(params, [
+      :original_id,
+      :title,
+      :source,
+      :url,
+      :author,
+      :community,
+      :thumbnail,
+      :score,
+      :is_nsfw,
+      :time_posted
+    ])
+  end
+
+  def insert_all(posts) do
+    insertion_result = posts
+    |> Enum.reduce(Multi.new(), fn (post, multi) ->
+      Multi.insert(multi, {:insert_post, post.original_id}, post)
+    end)
+    |> Repo.transaction()
+
+    case insertion_result do
+      {:ok, operations} ->
+        {:ok, Map.values(operations)}
+      other ->
+        other
+    end
+  end
+
+  def update_all(posts) do
+    multi = Enum.reduce(posts, Multi.new(), fn (post, multi) ->
+      changeset = Post.changeset(post, %{})
+      Multi.update(multi, {:update_post, post.original_id}, changeset)
+    end)
+
+    case Repo.transaction(multi) do
+      {:ok, operations} ->
+        {:ok, Map.values(operations)}
+      other ->
+        other
+    end
   end
 
   def upsert_post(multi, post) do
@@ -67,5 +120,11 @@ defmodule BetterReddit.Schemas.Post do
     else
       :no_post_with_id
     end
+  end
+
+  def with_original_ids(ids) do
+    Post
+    |> where([p], p.original_id in ^ids)
+    |> Repo.all()
   end
 end

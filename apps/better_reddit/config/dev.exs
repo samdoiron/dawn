@@ -28,7 +28,7 @@ config :better_reddit, BetterReddit.Endpoint,
   use_caching: true
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n", level: :info
+config :logger, :console, format: "[$level] $message\n", level: :debug
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.

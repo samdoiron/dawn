@@ -7,10 +7,9 @@ defmodule BetterReddit.Cache do
   end
 
   def get_or_calculate(cache, key, fallback_fn) do
-    if cache_disabled? do
+    if cache_disabled?() do
       fallback_fn.()
     else
-      IO.puts("cache enabled")
       case GenServer.call(cache, {:get, key}) do
         {:found, result} -> result
         :not_found -> set(cache, key, fallback_fn.())

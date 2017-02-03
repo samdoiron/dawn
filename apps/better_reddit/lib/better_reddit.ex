@@ -1,6 +1,5 @@
 defmodule BetterReddit do
   use Application
-  alias BetterReddit.{Endpoint, Hot, HotChannel}
 
   @moduledoc ~S"""
   The root module for BetterReddit. Calling start starts the entire application,
@@ -14,7 +13,7 @@ defmodule BetterReddit do
 
     children = [
       supervisor(BetterReddit.Endpoint, []),
-      supervisor(BetterReddit.RedditPostSupervisor, []),
+      supervisor(BetterReddit.PostSupervisor, []),
       worker(BetterReddit.Repo, []),
     ]
 

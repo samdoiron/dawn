@@ -3,6 +3,14 @@ alias Experimental.GenStage
 defmodule BetterReddit.SplitPosts do
   use GenStage
   alias BetterReddit.Schemas
+  @moduledoc ~S"""
+  Split incoming posts between those which we have never
+  seen before and those which are (assumedly updated) versions
+  of posts we have seen.
+
+  :new partition -> new posts
+  :old partition -> updated posts
+  """
 
   def start_link(name) do
     GenStage.start_link(__MODULE__, [], name: name)
@@ -28,8 +36,8 @@ defmodule BetterReddit.SplitPosts do
 
   def label_new_and_old(posts, existing) do
     Enum.map posts, fn post ->
-      old = Enum.find(existing, &(&1.original_id == post.original_id))
-      if old == nil do
+      existing = Enum.find(existing, &(&1.original_id == post.original_id))
+      if existing == nil do
         {post, :new}
       else
         {Schemas.Post.merge(old, post), :old}

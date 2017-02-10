@@ -7,6 +7,8 @@ defmodule BetterReddit.RedditPostGateway do
 
   Most of these subscribers (all as of writing) are Kappa views into the
   database.
+
+  See PostSupevisor for subscription information
   """
   
   defmodule RedditPost do
@@ -21,7 +23,6 @@ defmodule BetterReddit.RedditPostGateway do
   require Logger
 
   def start_link(name) do
-    IO.puts("starting gateway")
     GenStage.start_link(__MODULE__, [], name: name)
   end
 

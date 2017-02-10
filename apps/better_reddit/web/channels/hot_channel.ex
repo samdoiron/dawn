@@ -27,7 +27,7 @@ defmodule BetterReddit.HotChannel do
   defp reformat_posts(posts, community) do
     posts
     |> Enum.map(&remove_ecto_magic/1)
-    |> hot_message(community)
+    |> posts_update_message(community)
   end
 
   defp remove_ecto_magic(post) do
@@ -36,7 +36,7 @@ defmodule BetterReddit.HotChannel do
     |> Map.delete(:"__meta__")
   end
 
-  defp hot_message(posts, community) do
+  defp posts_update_message(posts, community) do
     %{
       name: community,
       posts: posts,

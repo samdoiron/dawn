@@ -12,7 +12,6 @@ defmodule BetterReddit.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :put_headers, %{"Access-Control-Allow-Origin" => "*"}
   end
 
   scope "/", BetterReddit do

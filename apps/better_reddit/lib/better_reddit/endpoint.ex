@@ -1,7 +1,7 @@
 defmodule BetterReddit.Endpoint do
   use Phoenix.Endpoint, otp_app: :better_reddit
 
-  @seconds_in_one_year 31536000
+  @seconds_in_one_year 31_536_000
 
   socket "/socket", BetterReddit.UserSocket
 

@@ -19,7 +19,7 @@ defmodule RedditGather.Mixfile do
        "coveralls.html": :test
      ],
      elixirc_paths: elixirc_paths(Mix.env),
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application

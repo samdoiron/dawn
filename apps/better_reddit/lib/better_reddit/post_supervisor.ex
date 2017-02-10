@@ -21,12 +21,23 @@ defmodule BetterReddit.PostSupervisor do
 
     {:ok, pid} = Supervisor.start_link(children, [strategy: :one_for_all])
 
+    # Gateway -> Post conversion
     GenStage.sync_subscribe(ConvertRedditPosts, to: RedditPostGateway, max_demand: 50)
+
+    # Posts -> New / Old partition
     GenStage.sync_subscribe(SplitPosts, to: ConvertRedditPosts, max_demand: 50)
+
+    # New / Old (:new) -> New post processing
     GenStage.sync_subscribe(NewPosts, to: SplitPosts, partition: :new)
+
+    # New / old (:old) -> Updated post processing
     GenStage.sync_subscribe(UpdatedPosts, to: SplitPosts, partition: :old)
+
+    #  New / Updated -> Hot kappa view
     GenStage.sync_subscribe(Hot, to: UpdatedPosts)
     GenStage.sync_subscribe(Hot, to: NewPosts)
+
+    # Hot kappa view -> Hot websocket channel
     GenStage.sync_subscribe(HotChannelConsumer, to: Hot)
     {:ok, pid}
   end

@@ -1,6 +1,5 @@
 defmodule RedditGather.TestTime do
   use GenServer
-  @behaviour RedditGather.Time
 
   def start_link do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
@@ -19,7 +18,6 @@ defmodule RedditGather.TestTime do
   end
 
   def handle_call({:sleep_ms, milliseconds}, _from, time) do
-    IO.puts("sleeping for #{milliseconds}")
     {:reply, :ok, time + milliseconds}
   end
 
